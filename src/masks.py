@@ -8,10 +8,12 @@ def get_mask_card_number(card_number: Iterable[str]) -> str:
     card_number_split[1] = "******"
     card_number_mask = "".join(card_number_split)
     card_number_mask_ = [card_number_mask[i : i + 4] for i in range(0, len(card_number_mask), 4)]
-    return " ".join(card_number_mask_)
+    mask_card = " ".join(card_number_mask_)
+    return mask_card
 
 
 def get_mask_account(number_account: Union[int, str]) -> str:
     """Функция принмает номер счета и преобразует в маску с видом "**ХХХХ" """
     number_account = str(number_account)
-    return f" **{number_account[-4:]}"
+    mask_account = f" **{number_account[-4:]}"
+    return mask_account
