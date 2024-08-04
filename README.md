@@ -2,13 +2,13 @@
 
 ## Описание:
 
-Проект содержит модули с функциями для 
+Проект содержит модули с функциями 
 
 ## Установка:
 
 1. Клонируйте репозиторий:
 ```
-git clone https://github.com/username/myblog.git
+git clone https://github.com/AlPogorelov/HomeWork_10.1.git
 ```
 
 2. Установите зависимости:
