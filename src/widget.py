@@ -1,15 +1,15 @@
-import masks
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(account_card_str: str) -> str:
-    """Функция принимает строку с номером карты или счета и  возвращает маску"""
+    """Функция принимает строку с номером карты или счета и возвращает маску"""
     account_card_mask = ""
     if account_card_str[-20::].isdigit():
         number = account_card_str[-20::]
-        account_card_mask = account_card_str[:-20] + masks.get_mask_account(number)
+        account_card_mask = account_card_str[:-20] + get_mask_account(number)
     elif account_card_str[-16::].isdigit():
         number = account_card_str[-16::]
-        account_card_mask = account_card_str[:-16] + masks.get_mask_card_number(number)
+        account_card_mask = account_card_str[:-16] + get_mask_card_number(number)
     return account_card_mask
 
 
@@ -17,8 +17,13 @@ def get_date(str_date_format: str) -> str:
     """Функция ворматирует дата вид ДД.ММ.ГГГГ"""
     normal_format_date = ""
     date_split = list()
-    date_split = str_date_format.split("T")
-    date_split_ = date_split[0]
-    date_split = [date_split_[-2:], date_split_[-5:-3], date_split_[:4]]
-    normal_format_date = ".".join(date_split)
+    if len(str_date_format) != 0:
+        date_split = str_date_format[:10]
+        # date_split_ = date_split[0]
+        date_split_ = [date_split[-2:], date_split[-5:-3], date_split[:4]]
+        normal_format_date = ".".join(date_split_)
     return normal_format_date
+
+
+# if __name__ == '__main__':
+#     print(get_date('2024-03-11T02:26:18.671407'))
