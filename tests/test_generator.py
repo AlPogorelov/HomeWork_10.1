@@ -1,38 +1,10 @@
 import pytest
 
-
-@pytest.fixture
-def account():
-    return ["64686473678894779589", "35383033474447895560", "73654108430135874305"]
+from src.generator import card_number_generator
 
 
-@pytest.fixture
-def list_dict():
-    return [
-        {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
-        {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
-        {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
-        {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
-    ]
-
-
-@pytest.fixture
-def state():
-    return ["EXECUTED", "CANCELED", "luboe slovo", "", 0, True, False]
-
-
-@pytest.fixture
-def list_date():
-    return [
-        {"date": "2019-07-03T18:35:29.512364"},
-        {"date": "2018-06-30T02:08:58.425572"},
-        {"date": "2018-09-12T21:27:25.241689"},
-        {"date": "2018-10-14T08:21:33.419441"},
-    ]
-
-@pytest.fixture
-def transactions_test():
-    return [
+def test_filter_by_currency(transactions_test):
+    expected_result_USD = [
         {
             "id": 939719570,
             "state": "EXECUTED",
@@ -64,21 +36,6 @@ def transactions_test():
             "to": "Счет 75651667383060284188"
         },
         {
-            "id": 873106923,
-            "state": "EXECUTED",
-            "date": "2019-03-23T01:09:46.296404",
-            "operationAmount": {
-                "amount": "43318.34",
-                "currency": {
-                    "name": "руб.",
-                    "code": "RUB"
-                }
-            },
-            "description": "Перевод со счета на счет",
-            "from": "Счет 44812258784861134719",
-            "to": "Счет 74489636417521191160"
-        },
-        {
             "id": 895315941,
             "state": "EXECUTED",
             "date": "2018-08-19T04:27:37.904916",
@@ -92,6 +49,26 @@ def transactions_test():
             "description": "Перевод с карты на карту",
             "from": "Visa Classic 6831982476737658",
             "to": "Visa Platinum 8990922113665229"
+        }
+    ]
+    result_USD = list([x for x in transactions_test if x["operationAmount"]["currency"]['code'] == 'USD'])
+    assert expected_result_USD == result_USD
+
+    expected_result_RUB = [
+        {
+            "id": 873106923,
+            "state": "EXECUTED",
+            "date": "2019-03-23T01:09:46.296404",
+            "operationAmount": {
+                "amount": "43318.34",
+                "currency": {
+                    "name": "руб.",
+                    "code": "RUB"
+                }
+            },
+            "description": "Перевод со счета на счет",
+            "from": "Счет 44812258784861134719",
+            "to": "Счет 74489636417521191160"
         },
         {
             "id": 594226727,
@@ -109,3 +86,27 @@ def transactions_test():
             "to": "Счет 14211924144426031657"
         }
     ]
+    result_RUB = list([x for x in transactions_test if x["operationAmount"]["currency"]['code'] == 'RUB'])
+    assert expected_result_RUB == result_RUB
+
+    expected_result_empty = list()
+    result_empty = list([x for x in transactions_test if x["operationAmount"]["currency"]['code'] == ''])
+    assert expected_result_RUB == result_RUB
+
+
+def tests_transaction_descriptions(transactions_test):
+    result = list(x["description"] for x in transactions_test)
+    expected_result = ['Перевод организации', 'Перевод со счета на счет', 'Перевод со счета на счет', 'Перевод с карты на карту',
+     'Перевод организации']
+    assert result == expected_result
+
+    result = list(x["description"] for x in '')
+    expected_result = []
+    assert result == expected_result
+
+
+def tests_card_number_generator():
+    expected_result = [
+        '0000 0000 0000 0001', '0000 0000 0000 0002'
+    ]
+    assert list(card_number_generator(1, 2)) == expected_result
