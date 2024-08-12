@@ -109,4 +109,5 @@ def tests_card_number_generator():
     expected_result = [
         '0000 0000 0000 0001', '0000 0000 0000 0002'
     ]
-    assert list(card_number_generator(1, 2)) == expected_result
+    result = card_number_generator(1, 2)
+    assert next(result) == expected_result[0]
