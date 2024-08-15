@@ -11,11 +11,10 @@ def transaction_descriptions(transactions):
         yield x["description"]
 
 
-
 def card_number_generator(start, stop):
     """Генератор выдает номера банкосвких карт в формате хххх хххх хххх хххх в диапозоне от до."""
     for i in range(start, stop + 1):
         vid_account = 10000000000000000
         delv = str(vid_account + i)[1:]
-        delv_ = ' '.join([(delv[z: z + 4]) for z in range(0, len(delv), 4)])
+        delv_ = " ".join([(delv[z : z + 4]) for z in range(0, len(delv), 4)])
         yield delv_

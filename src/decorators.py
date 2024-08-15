@@ -1,13 +1,13 @@
 from functools import wraps
 
 
-def log(filename):
+def log(filename=None):
     def log_decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            '''Функция проверяет если задана переменная filename то логи в файл, если нет то в консоль.'''
-            if filename != "":
-                with open(filename, "a") as file:
+            """Функция проверяет если задана переменная filename то логи в файл, если нет то в консоль."""
+            if filename:
+                with open(filename, "r+") as file:
                     file.write(f"Function `{func.__name__}` start working.\n")
                     try:
                         result = func(*args, **kwargs)
@@ -29,5 +29,8 @@ def log(filename):
                 else:
                     print(f"Result function `{func.__name__}`: {result}.")
                 print(f"Function `{func.__name__}` finish.")
+            return result
+
         return wrapper
+
     return log_decorator
