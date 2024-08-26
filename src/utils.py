@@ -5,15 +5,21 @@ from src.external_api import convert
 
 def open_json(name_file_json):
     """Десериализация полученного json файла в Python файл"""
-    with open(name_file_json, encoding="utf-8") as json_file:
-        try:
-            data = json.load(json_file)
-        except json.JSONDecodeError:
-            data = {}
-        except ValueError:
-            data = {}
-        except data == {}:
-            data = {}
+    try:
+        with open(name_file_json, encoding="utf-8") as json_file:
+            try:
+                data = json.load(json_file)
+            except json.JSONDecodeError:
+                data = []
+            except FileNotFoundError:
+                data = []
+            except ValueError:
+                data = []
+            except TypeError:
+                data = []
+        return data
+    except FileNotFoundError:
+        data = []
     return data
 
 

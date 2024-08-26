@@ -9,12 +9,16 @@ API_KEY = os.getenv("API_KEY")
 
 def convert(main_currency, conv_currency):
     """Получение курса валют из заданой валюты в RUB,"""
-    url = f"https://api.apilayer.com/exchangerates_data/convert?to={main_currency}&from={conv_currency}&amount=1"
 
-    payload = {}
-    headers = {"apikey": API_KEY}
+    if main_currency != conv_currency:
+        url = f"https://api.apilayer.com/exchangerates_data/convert?to={main_currency}&from={conv_currency}&amount=1"
 
-    response = requests.request("GET", url, headers=headers, data=payload)
+        payload = {}
+        headers = {"apikey": API_KEY}
 
-    result = response.json()
+        response = requests.request("GET", url, headers=headers, data=payload)
+
+        result = response.json()['result']
+    else:
+        result = 1
     return result
