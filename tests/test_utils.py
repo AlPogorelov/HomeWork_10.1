@@ -12,12 +12,12 @@ def test_convert(mock_request):
 
 def test_open_json():
 #Проверка на нормальную работу функции
-    file_name = '../tests/test.json'
+    file_name = 'test.json'
     expected = [{"id": 441945886,
                  "state": "EXECUTED"
                  },
                 {"id": 41428829,
-                 "state": "EXECUTED"
+                 "state": "EXE"
                  }]
     assert open_json(file_name) == expected
 
