@@ -21,38 +21,38 @@ utils_logger.setLevel(logging.DEBUG)
 
 def open_json(name_file_json):
     """Десериализация полученного json файла в Python файл"""
-    utils_logger.info(f'Функция начала работу')
+    utils_logger.info('Функция начала работу')
     try:
         with open(name_file_json, encoding="utf-8") as json_file:
             try:
                 data = json.load(json_file)
             except json.JSONDecodeError:
-                utils_logger.error(f'Невозможно декодировать json-данные')
+                utils_logger.error('Невозможно декодировать json-данные')
                 data = []
             except ValueError:
-                utils_logger.error(f'Значение json-данных не корректно')
+                utils_logger.error('Значение json-данных не корректно')
                 data = []
             except TypeError:
-                utils_logger.error(f'JSON-данные не поддерживается операцией сериализации')
+                utils_logger.error('JSON-данные не поддерживается операцией сериализации')
                 data = []
-        utils_logger.info(f'Функция успешно завершена')
+        utils_logger.info('Функция успешно завершена')
         return data
     except FileNotFoundError:
-        utils_logger.error(f'Данного json-файла не существует')
+        utils_logger.error('Данного json-файла не существует')
         data = []
     return data
 
 
 def sum_convert_amount(data):
     """Сумма транзакций в рублях, запрашивая по API курс валют"""
-    utils_logger.info(f'Функция начала работу')
+    utils_logger.info('Функция начала работу')
     usd = convert("RUB", "USD")
     eur = convert("RUB", "EUR")
     sum_amount = 0
 
     for i in data:
         if i == {}:
-            utils_logger.warning(f'В списке есть пустой словарь')
+            utils_logger.warning('В списке есть пустой словарь')
             continue
         else:
             if i["operationAmount"]["currency"]["code"] == "RUB":
@@ -61,12 +61,5 @@ def sum_convert_amount(data):
                 sum_amount += float(i["operationAmount"]["amount"]) * usd
             elif i["operationAmount"]["currency"]["code"] == "EUR":
                 sum_amount += float(i["operationAmount"]["amount"]) * eur
-    utils_logger.info(f'Функция успешно завершена')
+    utils_logger.info('Функция успешно завершена')
     return sum_amount
-
-
-# if __name__ == '__main__':
-#     # x = open_json('../data/operations.json')
-#     # sum_convert_amount(x)
-#     file_name = '../tests/test.json'
-#     print(open_json(file_name))

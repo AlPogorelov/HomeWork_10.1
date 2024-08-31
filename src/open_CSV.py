@@ -9,7 +9,3 @@ def open_csv(file_name):
         for row in reader:
             dict_csv.append(row)
         return dict_csv
-
-
-# if __name__ == '__main__':
-#     print(open_csv('../tests/test_CSV.csv'))

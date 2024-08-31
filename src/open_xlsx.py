@@ -6,6 +6,3 @@ def open_xlsx(file_name):
     df = pd.read_excel(file_name)
     excel_file = df.to_dict(orient='records')
     return excel_file
-
-if __name__ == '__main__':
-    print(open_xlsx('../tests/test_xlsx.xlsx'))
