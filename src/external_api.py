@@ -18,7 +18,7 @@ def convert(main_currency, conv_currency):
 
         response = requests.request("GET", url, headers=headers, data=payload)
 
-        result = response.json()['result']
+        result = response.json()["result"]
     else:
         result = 1
     return result
