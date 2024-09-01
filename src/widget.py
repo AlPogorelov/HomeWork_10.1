@@ -23,7 +23,3 @@ def get_date(str_date_format: str) -> str:
         date_split_ = [date_split[-2:], date_split[-5:-3], date_split[:4]]
         normal_format_date = ".".join(date_split_)
     return normal_format_date
-
-
-# if __name__ == '__main__':
-#     print(get_date('2024-03-11T02:26:18.671407'))
