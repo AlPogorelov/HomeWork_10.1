@@ -62,3 +62,7 @@ def sum_convert_amount(data):
                 sum_amount += float(i["operationAmount"]["amount"]) * eur
     utils_logger.info("Функция успешно завершена")
     return sum_amount
+
+
+if __name__ == '__main__':
+    print(sum_convert_amount(open_json('../data/operations.json')))
